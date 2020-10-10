@@ -1,0 +1,17 @@
+#rm -rf *.dat
+rm -rf OUTPUT/*.dat
+rm -rf OUTPUT/*.txt
+rm -rf OUTPUT/*.vtk
+rm -rf OUTPUT/XV_user.tx
+rm -rf OUTPUT/octave-workspace
+
+#rm -rf VALUE/*
+#//rm -rf VTK/*
+#rm -rf OUTPUT/coupe
+#rm -rf OUTPUT/coupeex
+#rm -rf OUTPUT/data
+#rm -rf OUTPUT/Dt
+#rm -rf OUTPUT/successTrajectories
+#rm -rf OUTPUT/tmin
+#rm -rf OUTPUT/VEX
+#rm -rf OUTPUT/VF

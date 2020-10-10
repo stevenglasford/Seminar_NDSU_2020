@@ -1,0 +1,11 @@
+rm -rf CMakeCache.txt  cmake_install.cmake  exe*  CMakeFiles Makefile
+rm -rf rochjsource
+rm -rf .project .cproject
+rm -rf *.aux *.log
+#rm -rf OUTPUT/*.dat
+#rm -rf *.dat
+#rm -rf OUTPUT/VALUE*
+#rm -rf OUTPUT/XV_user.txt
+#rm -rf VTK/*
+./cleandat
+
