@@ -477,10 +477,11 @@ protected:
    *  \param t     : current time in the mainloop algorithm
    */
   void      saveVEX                     (const char* file, double t);
-  //void      saveVexp                    (const char* file, double t, int PRINT);
+  void      saveVexp                    (const char* file, double t, int PRINT);
   void      (HJB::*saveVexp)            (const char* file, double t, int PRINT); // 2018 ENCOURS
   void      saveVexpTEX                 (const char* file, double t, int PRINT); // 2018 ENCOURS
   void      saveVexpBIN                 (const char* file, double t, int PRINT); // 2018 ENCOURS
+  void      saveVEX_mpi                 (const char* file,double t);
 
 
   /*!
@@ -532,14 +533,17 @@ protected:
    *  \param coupe : axes on which the projection is made
    *  \param val   : discretization value of cutted axes to make the projection
    */
-  //void      saveCoupeM                  (const char* file, const int* coupe, const double* val, double* vtab, int PRINT);
-  //void      saveCoupeMex                (const char* file, const int* coupe, const double* val, int PRINT);
+  void      saveCoupeM                  (const char* file, const int* coupe, const double* val, double* vtab, int PRINT);
+  void      saveCoupeMex                (const char* file, const int* coupe, const double* val, int PRINT);
   void      (HJB::*saveCoupeM)          (const char* file, const int* coupe, const double* val, double* vtab, int PRINT);
   void      saveCoupeMTEX               (const char* file, const int* coupe, const double* val, double* vtab, int PRINT);
   void      saveCoupeMBIN               (const char* file, const int* coupe, const double* val, double* vtab, int PRINT);
   void      (HJB::*saveCoupeMex)        (const char* file, const int* coupe, const double* val, int PRINT);
   void      saveCoupeMexTEX             (const char* file, const int* coupe, const double* val, int PRINT);
   void      saveCoupeMexBIN             (const char* file, const int* coupe, const double* val, int PRINT);
+  void      saveCoupeM_mpi              (const char* file, const int* coupe, const double* val);
+  void      saveCoupeMex_mpi            (const char* file, const int* coupe, const double* val);
+
 
   /*!
    *  \brief compute borders points in the augmented mesh
@@ -714,6 +718,12 @@ protected:
    */
   int       compute_optimal_trajectory    (const double* initialpoint, const char* filename, int number, double* terminalpoint, double &terminaltime);
   int       compute_optimal_trajectory_val(const double* initialpoint, const char* filename, int number, double time_start, double* terminalpoint, double &terminaltime);
+  int       compute_optimal_trajectory_mpi(const double* initialpoint, const char* filename, int number, double* terminalpoint, double &terminaltime);
+  int       compute_optimal_trajectory_val(const double* initialpoint, const char* filename, int number, double time_start, double* terminalpoint, double &terminaltime);
+  // AD: jan 2015: adaptive reconstruction method
+  int       compute_optimal_trajectory_adapt(const double* initialpoint, const char* filename, int number, double* terminalpoint, double &terminaltime);
+  // AD: jul 2015: adaptive reconstruction method with texit (=tmax)
+  int       compute_optimal_trajectory_texit(const double* initialpoint, const char* filename, int number, double* terminalpoint, double &terminaltime);
 
 
 
