@@ -13,3 +13,5 @@
 //for min or max problems: function HJB::find_optimal_control_val
 #include "find_oc.h"
 //including min/max problems: function HJB::find_optimal_control_val (-> will become val2)
+#include "find_oc2.h" 	       //- including min/max problems: function HJB::find_optimal_control_val (-> will become val2)
+
