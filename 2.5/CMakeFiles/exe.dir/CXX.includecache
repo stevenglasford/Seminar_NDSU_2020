@@ -6,25 +6,25 @@
 
 #IncludeRegexTransform: 
 
-/home/steven/Documents/Seminar_NDSU_2020/temp/data/data_FD_nd.h
-data_FD_nd_default.h
-/home/steven/Documents/Seminar_NDSU_2020/temp/data/data_FD_nd_default.h
+/home/steven/Documents/Seminar_NDSU_2020/2.5/data/data_default.h
 
-/home/steven/Documents/Seminar_NDSU_2020/temp/data/data_FD_nd_default.h
+/home/steven/Documents/Seminar_NDSU_2020/2.5/data/data_ivan.h
+data_default.h
+/home/steven/Documents/Seminar_NDSU_2020/2.5/data/data_default.h
 
-/home/steven/Documents/Seminar_NDSU_2020/temp/data/data_simulation.h
-data_FD_nd.h
-/home/steven/Documents/Seminar_NDSU_2020/temp/data/data_FD_nd.h
+/home/steven/Documents/Seminar_NDSU_2020/2.5/data/data_simulation.h
+data_ivan.h
+/home/steven/Documents/Seminar_NDSU_2020/2.5/data/data_ivan.h
 
-/home/steven/Documents/Seminar_NDSU_2020/temp/src/main.cpp
+/home/steven/Documents/Seminar_NDSU_2020/2.5/src/main.cpp
 stdafx.h
-/home/steven/Documents/Seminar_NDSU_2020/temp/src/stdafx.h
+/home/steven/Documents/Seminar_NDSU_2020/2.5/src/stdafx.h
 HJB_FD.h
-/home/steven/Documents/Seminar_NDSU_2020/temp/src/HJB_FD.h
+/home/steven/Documents/Seminar_NDSU_2020/2.5/src/HJB_FD.h
 HJB_SL.h
-/home/steven/Documents/Seminar_NDSU_2020/temp/src/HJB_SL.h
+/home/steven/Documents/Seminar_NDSU_2020/2.5/src/HJB_SL.h
 ../data/data_simulation.h
-/home/steven/Documents/Seminar_NDSU_2020/temp/data/data_simulation.h
+/home/steven/Documents/Seminar_NDSU_2020/2.5/data/data_simulation.h
 
 include/Commands.h
 stdafx.h

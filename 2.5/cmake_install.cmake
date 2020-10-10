@@ -1,4 +1,4 @@
-# Install script for directory: /home/steven/Documents/Seminar_NDSU_2020/temp
+# Install script for directory: /home/steven/Documents/Seminar_NDSU_2020/2.5
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/steven/Documents/Seminar_NDSU_2020/temp/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/steven/Documents/Seminar_NDSU_2020/2.5/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

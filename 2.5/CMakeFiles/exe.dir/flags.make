@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/g++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/steven/Documents/Seminar_NDSU_2020/temp/include
+CXX_INCLUDES = -I/home/steven/Documents/Seminar_NDSU_2020/2.5/include
 
 CXX_FLAGS =  -O3 -fopenmp
 
