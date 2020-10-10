@@ -94,6 +94,24 @@ protected:
   int       savevfallstep;      /*! savings for v : step - iteration step (data: SAVE_VF_ALL_STEP) */
   int       savevffinal;        /*! savings for v final  - (data: SAVE_VF_FINAL) */
   // 2018 
+  int       savevffinalonset;   /*! save final value */
+  int       VALUE_PB;           //- savings for value pb
+  int       SAVE_VALUE_ALL;     //- savings for value pb
+  int       SAVE_VALUE_ALL_STEP;//- savings for value pb
+  int       SAVE_VALUE_FINAL;   //- savings for value pb
+  int       format_fulldata;
+  int       check_error;        /*! Test if, during the mainloop computation, errors evaluation needs to be called */
+  int       checkerrorstep;     /*! Iteration step for errors evaluation */
+  double    c_threshold;        /*! threshold for errors */
+  int       computetraj;        /*! Test if optimal trajectories need to be computed in the post processing */
+  int       TRAJ_METHOD;        //  reconstruction with topt (0) or value (1)
+  double    time_TRAJ_START;    //  starting time for trajectory reconstruction
+  double    min_TRAJ_STOP;      //  stopping threshold for trajectory reconstruction: to stop if val(x)<=min (rather than of val(x)<=0)
+  double    max_TRAJ_STOP;      //  stopping threshold for trajectory reconstruction: to stop if val(x)>=max (rather than of val(x)>=INF)
+  int       TARGET_STOP;        //  stopping on target (0/1) 
+  int       ADVERSE_METHOD;     //  type of adverse control (0/1)
+  int       PRINTTRAJ;          //  for further trajectory output printings 
+
   int       SAVE_VEX_ALL;        /*! savings for vex */  
   int       SAVE_VEX_FINAL;      /*! savings for vex final */
   int       SAVE_TOPT_ALL;       /*! savings for topt */
@@ -262,11 +280,11 @@ public:
    */
   void      loadV0                      (const char* file, int PRINT);  // slow(old)
   void      loadV1                      (const char* file, int PRINT);  // fast(old)
- // void      loadV                       (const char* file, int PRINT);  // old
- // void      loadVlocal                  (const char* file, int PRINT);  // old
+  void      loadV                       (const char* file, int PRINT);  // old
+  void      loadVlocal                  (const char* file, int PRINT);  // old
 
-  //void      loadVp                      (const char* filePrefix, const char* file0, double* vtab, int PRINT); // 2018
-  //void      loadVplocal                 (const char* filePrefix, double* vtab, int PRINT); // 2018
+  void      loadVp                      (const char* filePrefix, const char* file0, double* vtab, int PRINT); // 2018
+  void      loadVplocal                 (const char* filePrefix, double* vtab, int PRINT); // 2018
   void      (HJB::*loadVp)              (const char* filePrefix, const char* file0, double* vtab, int PRINT); // ENCOURS 2018
   void      loadVpTEX                   (const char* filePrefix, const char* file0, double* vtab, int PRINT); // ENCOURS 2018
   void      loadVpBIN                   (const char* filePrefix, const char* file0, double* vtab, int PRINT); // ENCOURS 2018
@@ -277,13 +295,13 @@ public:
    *  \brief save table v the value function in the string parameter
    *  \param file : name of the file to be written
    */
-  //void      saveV                       (const char* file);	       // to be removed
-  //void      saveVp                      (const char* file, double* vtab, int PRINT); 
+  void      saveV                       (const char* file);	       // to be removed
+  void      saveVp                      (const char* file, double* vtab, int PRINT); 
   void      (HJB::*saveVp)              (const char* file, double* vtab, int PRINT); // 2018 ENCOURS
   void      saveVpTEX                   (const char* file, double* vtab, int PRINT); // 2018 ENCOURS
   void      saveVpBIN                   (const char* file, double* vtab, int PRINT); // 2018 ENCOURS
 
-  //void      saveVpOnSet                 (const char* file, double* vtab, int PRINT); // v or topt 
+  void      saveVpOnSet                 (const char* file, double* vtab, int PRINT); // v or topt 
   void      (HJB::*saveVpOnSet)         (const char* file, double t, double* vtab, int PRINT); // 2018 ENCOURS
   void      saveVpOnSetTEX              (const char* file, double t, double* vtab, int PRINT); // 2018 ENCOURS
   void      saveVpOnSetBIN              (const char* file, double t, double* vtab, int PRINT); // 2018 ENCOURS
@@ -314,7 +332,7 @@ public:
    *  \brief save values {VF,Vex,topt} on hard disk - a priori linked to savetabs 
    *  \brief 2018 obsolete
    */
-  //void      (HJB::*savevfall)           (double tloc, int it, int PRINT); 
+  void      (HJB::*savevfall)           (double tloc, int it, int PRINT); 
   //void      (HJB::*savevfallcoupe)      (double tloc, int it, int PRINT); 
 
   /*!
@@ -326,10 +344,41 @@ public:
    */
   void      savetabs                    (double tloc, int it, int PRINT);
 
+/*!
+   *  \brief in the MPI parallelization case (domain decomposition)
+   *  \brief save table value function (ex:VF.dat) or minimal time (ex:tmin.dat) or Vex (ex:VEX.dat) in the file named after string parameter
+   *  \brief every MPI procs sends its data to the master except itself
+   *  \param iteration : current iteration in the mainloop algorithm
+   */
+  void      savetabsMPI0                (int it); //- memory limited
+  void      savetabsMPI1                (int it); //- slow
+  void      savetabsMPI                 (int it); //- last
+  void      savetabsMPIIO               (int it); 	  //- 2014
+  void      savetabsMPIIOlocal          (char*, double*); //- 2014
+  void      savetabsMPIunordered        (int it); 	  //- 2014
+
+  /*!
+   *  \brief in the MPI parallelization case (domain decomposition)
+   *  \brief savefulltabs sub function for saving table value function or minimal time in the file named after string parameter
+   *  \param file : name of the file to be written
+   *  \param tab  : table data to be saved
+   *  \param tref : test if it is the table value function or minimal time which is to be saved
+   */
+  void      saveTab                     (const char* file, const double* tab , int tref);
+ 
+
   /*! \brief savings of coupe{it}.dat, coupeex{it}.dat, coupetopt{it}.dat on hard disk
    */
   void      savetabscoupe               (double tloc, int it, int PRINT);
 
+  /*!
+   *  \brief in the MPI parallelization case (domain decomposition)
+   *  \brief load table value function or minimal time from the file named after string parameter
+   *  \param file : name of the file to be written
+   *  \param tab  : table data to be saved
+   *  \param tref : test if it is the table value function or minimal time which is to be saved
+   */
+  void      loaDtab                     (const char* file, double* tab , int tref);
 
 
   /*!
@@ -406,6 +455,8 @@ protected:
   void      (HJB::*compError)           (double t);
   void      computeError0               (double t);
   void      computeError                (double t);
+  void      computeErrorMPI             (double t);
+
 
   /*!
    *  \brief stopping criterion, test if max_i (abs(V^(n)[i]-V^(n-1)[i])) is smaller than the epsilon threshold
@@ -413,6 +464,7 @@ protected:
    */
   bool      (HJB::*testStoppingCriteriaEps) (double t);
   bool      testStoppingCriteriaEpsilon (double t);
+  bool      testStoppingCriteriaEpsilonMPI(double t);
 
   /*!
    *  \brief save mesh parameters of the problem
