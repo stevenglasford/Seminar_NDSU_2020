@@ -73,7 +73,7 @@ int main(int argc, char *argv[], char *env[]){
     //---------------------------------------------------
 
     //- for some general user data definitions
-    //init_data();
+    init_data();
 
     int numthreads=1, griddim=2;
     unsigned taille_maillage[DIM];
@@ -161,11 +161,11 @@ int main(int argc, char *argv[], char *env[]){
        CHECK_ERROR, CHECK_ERROR_STEP, CHECK_NEG_POINTS, C_THRESHOLD,
        T, DT, BOUNDARY, MAX_ITERATION, EPSILON,
        *dynamics, *dynamics2, 
-       /**feedback,*/
+       *feedback,
        *dynamicsGrad,
        *distributed_cost, *distributed_cost2, 
        *v0, *Vex,
-       *g_border, *g_bordermix,/**feedback,*/
+       *g_border, *g_bordermix,
        FILE_PREFIX,EXTERNAL_FILE_PREFIX
     };
 
