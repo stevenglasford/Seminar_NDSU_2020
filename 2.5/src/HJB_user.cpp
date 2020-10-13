@@ -14,7 +14,7 @@
 //- Warning: here only for the case OPTIM=MAXIMUM problems (means "max" in the HJB equation)
 //-
 
-#include "compute_ot.h"        //- based on topt, for min or max problems
+#include "compute_ot.h"       //- based on topt, for min or max problems
 #include "compute_ot2.h"       //- based on topt, for two player games (min/max or max/min pbs)
 #include "compute_otval.h"     //- based on value
 

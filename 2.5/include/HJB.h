@@ -19,6 +19,10 @@ class HJB {
   // -------------------
   char      VFile      [100];
   char      XFile_user [100];
+  char      XuserFile    [100];
+  char      XuserVFile   [100];
+  char      XuserVexFile [100];
+  char      XuserToptFile[100];
   char      VFile_user [100];
   char      VEXFile    [100];
   char      VFALLFile  [100];
@@ -30,8 +34,11 @@ class HJB {
   char      trajFile   [100];
   char      trajFileMore[100];
   char      DtFile     [100];
+  char      extern_VFile[100];
+  char      extern_tminFile[100];
   char      successTrajectoriesFile [100];
   char*     filePrefix; 
+  char*     filePrefixExt; 
 
   char      toptcoupeFile[100]; // [DEC 2016]
 
@@ -47,6 +54,7 @@ class HJB {
   Commands  *u2;                /*! Commmands */
 
   int       ncall;              /*! Commmands number */
+  int       ncall2; 		/*! in case of second set of commands */
 
 
   RegularMesh   *mesh;          /*! Mesh on which we are working */
@@ -87,6 +95,9 @@ class HJB {
   int       TOPT_TYPE;          /*! Type of tmin/tmax time problem (0= tmin, 1= tmax of exit time)*/
   int       save_vfall;         /*! Test if, during the mainloop computation, value function needs to be saved */
   int       savevfallstep;      /*! Iteration step for saving value function */
+  int       SAVE_VEX_ALL;        /*! savings for vex */  
+  int       SAVE_VEX_FINAL;      /*! savings for vex final */
+
   int       savevffinal;        /*! save final value */
   int       savevffinalonset;   /*! save final value */
   int       VALUE_PB;           //- savings for value pb
@@ -105,9 +116,54 @@ class HJB {
   int       TARGET_STOP;        //  stopping on target (0/1) 
   int       ADVERSE_METHOD;     //  type of adverse control (0/1)
   int       PRINTTRAJ;          //  for further trajectory output printings 
+  int       SAVE_TOPT_ALL;       /*! savings for topt */
+  int       SAVE_TOPT_FINAL;     /*! savings for topt final */
+  int       SAVE_COUPE_ALL;      /*! savings for coupe */
+  int       SAVE_COUPE_ALL_STEP; /*! savings for coupe : step */
+  int       SAVE_COUPE_FINAL;    /*! savings for coupe final */
+  int       SAVE_COUPEEX_ALL;    /*! savings for coupeex */
+  int       SAVE_COUPEEX_FINAL;  /*! savings for coupeex final */
+  int       SAVE_COUPETOPT_ALL;  /*! savings for coupetopt */
+  int       SAVE_COUPETOPT_FINAL;/*! savings for coupetopt final */
+  int       SAVE_VF_ONSET_ALL;    /*! savings for v - mesh user defined  */  
+  int       SAVE_VF_ONSET_FINAL;  /*! savings for v final - mesh user defined */
+  int       SAVE_VEX_ONSET_ALL;   /*! savings for vex - mesh user defined  */  
+  int       SAVE_VEX_ONSET_FINAL; /*! savings for vex final - mesh user defined */
+  int       SAVE_TOPT_ONSET_ALL;  /*! savings for topt - mesh user defined  */  
+  int       SAVE_TOPT_ONSET_FINAL;/*! savings for topt final - mesh user defined */
+  int       NBPOINTS_Xuser;
+  char*     XuserFile0;
+  char*     XuserVFile0;
+  char*     XuserVexFile0;
+  char*     XuserToptFile0;
+
+  int       SAVE_COUPE_INTERPOLATION; /*! savings for coupe/coupeex : 1 ==> interpolates on grid */
+  int       SHOW_COORDINATES;   /*! to show coordinates at right of the VF.dat (etc.) files */
+  int       BINARY;             /*! for BINARY(1) or TEXT(0) save & load */
+
+  //int       savevffinalonset;   /*! save final value on some user defined grid set */
+  // int       VALUE_PB;           //- savings for value pb
+  // int       SAVE_VALUE_ALL;     //- savings for value pb
+  // int       SAVE_VALUE_ALL_STEP;//- savings for value pb
+  // int       SAVE_VALUE_FINAL;   //- savings for value pb
+  // int       format_fulldata;
+  // int       check_error;        /*! Test if, during the mainloop computation, errors evaluation needs to be called */
+  // int       checkerrorstep;     /*! Iteration step for errors evaluation */
+  int       CHECK_NEG_POINTS;   /*! Iteration step for errors evaluation */
+  // double    c_threshold;        /*! threshold for errors */
+  // int       computetraj;        /*! Test if optimal trajectories need to be computed in the post processing */
+  // int       TRAJ_METHOD;        //  reconstruction with topt (0) or value (1)
+  // double    time_TRAJ_START;    //  starting time for trajectory reconstruction
+  // double    min_TRAJ_STOP;      //  stopping threshold for trajectory reconstruction: to stop if val(x)<=min (rather than of val(x)<=0)
+  // double    max_TRAJ_STOP;      //  stopping threshold for trajectory reconstruction: to stop if val(x)>=max (rather than of val(x)>=INF)
+  // int       TARGET_STOP;        //  stopping on target (0/1) 
+  // int       ADVERSE_METHOD;     //  type of adverse control (0/1)
+  int       ODE_SCHEME;
+  int       CONTROL_METHOD;
+  // int       PRINTTRAJ;          //  for further trajectory output printings 
 
 
-  double    diffvmax;           /*! Stop criterion for value function's variation between 2 iterations */
+  //double    diffvmax;           /*! Stop criterion for value function's variation between 2 iterations */
   double    epsilon;
   double    T;                  /*! Stop criterion for time */
   int       MAX_ITERATION;      /*! Stop criterion for iteration number */
@@ -116,11 +172,13 @@ class HJB {
   double    *coupe_vals;        /*! values of the cut */
   double    norm1, normi;       /*! error values : norm one & infinite norm */
 
+  int       *dvint;             /*! for SL only : local int* pointer */
 
-  int       OMP_ENABLE;         /*! Test if OpenMP parallelization is used */
-  int       OMP_NUM_THREADS;    /*! Thread number used in the MPI */
-  int       MPI_ENABLE;         /*! set to 0 when no MPI, or MPI on but only one process */
-  int       my_rank;            /*! MPI rank of current CPU in the MPI communicator intracomm */
+  // INT       *dvectint;          /*! MPI : local int* pointer */
+  INT       OMP_ENABLE;         /*! Test if OpenMP parallelization is used */
+  INT       OMP_NUM_THREADS;    /*! Thread number used in the MPI */
+  INT       MPI_ENABLE;         /*! set to 0 when no MPI, or MPI on but only one process */
+  INT       my_rank;            /*! MPI rank of current CPU in the MPI communicator intracomm */
 
   int       periodic_mesh;       /*! 1:if at least one of the dimension is set periodic, 0:otherwise */
   int       *periodsize;         /*! number of points for periodic mesh for each dimension */
@@ -135,6 +193,8 @@ class HJB {
   int       *p;
   int       iter;
   int       nbSaves;
+  int       nbSavesCoupe;        /*! number of saved "coupe" files  */
+
   int       **bordersData;
 
   vector<double> tictoc_stack; // for tic, toc, and gettimeofday use
@@ -189,9 +249,19 @@ class HJB {
   virtual void mainloop                 ()  = 0;
 
   /*!
-   *  \brief execute post processing after computing the final value function or time minimal problem results
+   *  \brief execute init/post processing after computing the final value function or time minimal problem results
    */
+  void      initprocess                 (); // TODO 2018
   void      postprocess                 ();
+  //void      postprocess_user            (); // 2018
+
+  /*!
+   * \brief  implemented in user_{init,post}process(_default).h and is void by default; user can complete it with personal code
+   */
+  void      user_initprocess            (); // TODO 2018
+  void      user_postprocess            ();
+  void      user_stepprocess            (double t, double dt, double *vin, double *vout); 
+
 
 
   /*!
@@ -217,13 +287,42 @@ class HJB {
   void      loadV                       (const char* file, int PRINT);
   void      loadVlocal                  (const char* file, int PRINT);
 
+
+  //void      loadVp                      (const char* filePrefix, const char* file0, double* vtab, int PRINT); // 2018
+  //void      loadVplocal                 (const char* filePrefix, double* vtab, int PRINT); // 2018
+  void      (HJB::*loadVp)              (const char* filePrefix, const char* file0, double* vtab, int PRINT); // ENCOURS 2018
+  void      loadVpTEX                   (const char* filePrefix, const char* file0, double* vtab, int PRINT); // ENCOURS 2018
+  void      loadVpBIN                   (const char* filePrefix, const char* file0, double* vtab, int PRINT); // ENCOURS 2018
+  void      loadVplocalTEX              (const char* filePrefix, double* vtab, int PRINT);                    // ENCOURS 2018
+  void      loadVplocalBIN              (const char* filePrefix, double* vtab, int PRINT);                    // ENCOURS 2018
+
+  /*!
+   *  \brief save table v the value function in the string parameter
+   *  \param file : name of the file to be written
+   */
+  //void      saveV                       (const char* file);	       // to be removed
+  //void      saveVp                      (const char* file, double* vtab, int PRINT); 
+  void      (HJB::*saveVp)              (const char* file, double* vtab, int PRINT); // 2018 ENCOURS
+  void      saveVpTEX                   (const char* file, double* vtab, int PRINT); // 2018 ENCOURS
+  void      saveVpBIN                   (const char* file, double* vtab, int PRINT); // 2018 ENCOURS
+
+  //void      saveVpOnSet                 (const char* file, double* vtab, int PRINT); // v or topt 
+  void      (HJB::*saveVpOnSet)         (const char* file, double t, double* vtab, int PRINT); // 2018 ENCOURS
+  void      saveVpOnSetTEX              (const char* file, double t, double* vtab, int PRINT); // 2018 ENCOURS
+  void      saveVpOnSetBIN              (const char* file, double t, double* vtab, int PRINT); // 2018 ENCOURS
+
+  //void      saveVexpOnSet               (const char* file, double t, int PRINT);     // vex 
+  void      (HJB::*saveVexpOnSet)       (const char* file, double t, int PRINT); // 2018 ENCOURS
+  void      saveVexpOnSetTEX            (const char* file, double t, int PRINT); // 2018 ENCOURS
+  void      saveVexpOnSetBIN            (const char* file, double t, int PRINT); // 2018 ENCOURS
+
   /*!
    *  \brief save table v the value function in the string parameter
    *  \param file : name of the file to be written
    */
   void      saveV                       (const char* file);	       // to be removed
-  void      saveVp                      (const char* file, int PRINT); // to be changed to "saveV"
-  void      saveVpOnSet                 (const char* file, int PRINT); // to be changed to "saveV"
+  // void      saveVp                      (const char* file, int PRINT); // to be changed to "saveV"
+  // void      saveVpOnSet                 (const char* file, int PRINT); // to be changed to "saveV"
 
   /*!
    *  \brief load in table tmin the minimal time solution saved in the string parameter
@@ -248,6 +347,31 @@ class HJB {
    *  \param iteration : current iteration in the mainloop algorithm
    */
   void      savetabs                    (int it);
+  
+  /*! \brief savings of coupe{it}.dat, coupeex{it}.dat, coupetopt{it}.dat on hard disk
+   */
+  void      savetabscoupe               (double tloc, int it, int PRINT);
+
+
+  /*!
+   *  \brief Counting number of v(i)<=0 inside / total 
+   */
+  void      comptage_basic              (int &n1, int &n2, double* vin, int PRINT, int PRINTminmax);
+
+  void      comptage                    (int &n1, int &n2, double* vin, double xmin[], double xmax[], double& vmini, int COMPUTEminmax, int PRINT, int PRINTminmax);
+
+  /*!  \brief norms |v-vold| : Li,L1, and max(v)  */
+  void      vdiff                       (double *v, double *vold, double &nLi, double &nL1, double &maxi);
+
+
+  /*!  \brief get size of file in bites */
+  long      getFileSize                 (const char* filename);
+ 
+  /*!  \brief convert time (sec) into years, months, ans days */
+  void convert_years_months_days
+    (double t_seconds, int &ty, int &tm, int &td, int PRINT, string mess_beg, string mess_end);
+
+
   /*!
    *  \brief in the MPI parallelization case (domain decomposition)
    *  \brief save table value function (ex:VF.dat) or minimal time (ex:tmin.dat) or Vex (ex:VEX.dat) in the file named after string parameter
@@ -363,6 +487,9 @@ class HJB {
   void      saveVEX                     (const char* file,double t);
   void      saveVEXp                    (const char* file,double t, int PRINT);
   void      saveVEX_mpi                 (const char* file,double t);
+  void      (HJB::*saveVexp)            (const char* file, double t, int PRINT); // 2018 ENCOURS
+  void      saveVexpTEX                 (const char* file, double t, int PRINT); // 2018 ENCOURS
+  void      saveVexpBIN                 (const char* file, double t, int PRINT); // 2018 ENCOURS
 
   /*!
    *  \brief save table value function or minimal time in the VTK format in the file named after string parameter
@@ -412,10 +539,16 @@ class HJB {
    *  \param coupe : axes on which the projection is made
    *  \param val   : discretization value of cutted axes to make the projection
    */
-  void      saveCoupeM                  (const char* file, const int* coupe, const double* val, double* vtab);
-  void      saveCoupeMex                (const char* file, const int* coupe, const double* val);
+  // void      saveCoupeM                  (const char* file, const int* coupe, const double* val, double* vtab);
+  // void      saveCoupeMex                (const char* file, const int* coupe, const double* val);
   void      saveCoupeM_mpi              (const char* file, const int* coupe, const double* val);
   void      saveCoupeMex_mpi            (const char* file, const int* coupe, const double* val);
+  // void      (HJB::*saveCoupeM)          (const char* file, const int* coupe, const double* val, double* vtab, int PRINT);
+  void      saveCoupeMTEX               (const char* file, const int* coupe, const double* val, double* vtab, int PRINT);
+  void      saveCoupeMBIN               (const char* file, const int* coupe, const double* val, double* vtab, int PRINT);
+  void      (HJB::*saveCoupeMex)        (const char* file, const int* coupe, const double* val, int PRINT);
+  void      saveCoupeMexTEX             (const char* file, const int* coupe, const double* val, int PRINT);
+  void      saveCoupeMexBIN             (const char* file, const int* coupe, const double* val, int PRINT);
 
 
   /*!
@@ -441,6 +574,10 @@ class HJB {
   double    (*g_border)                 (double, const double*);  //- boundary condition function for FD and/or SL
   double    (*g_bordermix)              (double, const double*, double);  //- b.c. for FD and/or SL
 
+  //- FOR FD/SL : 
+  double    (HJB::*TbordCompute)        (double t, const double* x, const double* vtab); 
+  double    TbordCompute_tmin           (double t, const double* x, const double* vtab); 
+
   //- FOR SL
   double    (HJB::*VbordCompute)        (double t, const double* x, const double* vtab);  //- for SL only
   double    VbordComputeVoid            (double t, const double* x, const double* vtab);  //- for SL - this fonction should not be called.
@@ -452,6 +589,7 @@ class HJB {
 
   void      (*dynamics)                 (const double*, C,    double, double*);
   void      (*dynamics2)                (const double*, C, C, double, double*);
+  void      (*feedback)                 (double t, const double* x, const double* p, C& u);
   double    (*distributed_cost)         (const double*, C,    double);
   double    (*distributed_cost2)        (const double*, C, C, double);
   double    (*v0)                       (const double*);          //- initial data
@@ -462,6 +600,13 @@ class HJB {
   double    (*g_target)                 (double, const double*);  //- g_target: for traj. reconstruction, to stop if g_target(x)<=0.
   void      (*u2_adverse)               (double, const double*, C&);    //- adverse control - user defined
   //void      (*u2_adverse)               (double, const double*, double*);    //- adverse control - user defined
+
+  /*!
+   *   PMP link: adjoint dynamics
+   */ 
+  //void      (*dynamicsGrad)             (const double*, C, double, double**);
+  void      (*dynamicsGrad)             (const double* x, C u, double, double** res);
+
 
   /*!
    *  \brief function pointer where one interpolation function is linked with
@@ -477,13 +622,19 @@ class HJB {
    */
   double    bilinearInterpolation       (const double* PP,const double* tab);
 
+  /*! 
+   *  \brief funtion is implemented only for 2d meshes
+   *  \brief Works in critical cases where some mesh size are 1 in some directions
+   */
+  double    bilinearInterpolation_test  (const double* PP, const double* tab);
+
+
   /*!
    *  \brief funtion is implemented only for 2d meshes
    *  \brief compute the bilinear interpolation for a given point with designed results table (value function or minimal time)
    *  \param PP  : current mesh point coordinates
    *  \param tab : table data for computation
    */
-
 
   double    bilinearInterpolation1d   (const double* PP,const double* tab);
   double    bilinearInterpolation2d   (const double* PP,const double* tab);
@@ -562,6 +713,12 @@ class HJB {
      */
   void      periodizePoint              (double * x);
 
+  /*!
+   *  \brief computes euclidean norm 
+   *  \param point coordinates
+   *  \return computed norm
+   */
+  double   norm                         (const double*)  const;
 
   /*!
    *  \brief compute the norme for a given point
@@ -583,6 +740,12 @@ class HJB {
 
 };
 
+inline double HJB::norm(const double* point) const {
+  double res=0;
+  for(int d=0;d<dim;d++)
+    res+=point[d]*point[d];
+  return sqrt(res);
+};
 
 inline double HJB::norme(const double* point) const {
   double res=0;

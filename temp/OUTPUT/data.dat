@@ -1,0 +1,25 @@
+   2         % dimension
+   1         % MESH
+   0.0020000 % Dx[0]
+   0.0020000 % Dx[1]
+   0.0000000 % mesh->GLOBAL_lowBounds [ 0]
+   1.5000000 % mesh->GLOBAL_highBounds[ 0]
+   0.0000000 % mesh->GLOBAL_lowBounds [ 1]
+   1.5000000 % mesh->GLOBAL_highBounds[ 1]
+ 751         % mesh->GLOBAL_gridDim[ 0]
+ 751         % mesh->GLOBAL_gridDim[ 1]
+  60.0000000 % T
+   0         % compute_vex
+   2         % dimension of the cut
+   1         % coupe_dims[0]
+   1         % coupe_dims[1]
+   0         % icoupe (cutting value in direction d=0)
+ 500         % icoupe (cutting value in direction d=1)
+   1         % save_vfall
+ 241         % nbSaves (used in the case save_vfall=1)
+   1         % computetraj (number of trajectories)
+   0         % VALUE_PB (for solving value function problems)
+   0         % SAVE_COUPE_ALL
+1201         % nbSavesCoupe (used in the case SAVE_COUPE_ALL=1)
+   0         % BINARY (load/save in binary mode)
+   1         % FORMAT_FULLDATA (set 1 to add index coords in output .dat files)
