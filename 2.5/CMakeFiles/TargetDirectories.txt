@@ -1,3 +1,0 @@
-/home/steven/Documents/Seminar_NDSU_2020/2.5/CMakeFiles/rebuild_cache.dir
-/home/steven/Documents/Seminar_NDSU_2020/2.5/CMakeFiles/edit_cache.dir
-/home/steven/Documents/Seminar_NDSU_2020/2.5/CMakeFiles/exe.dir

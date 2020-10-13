@@ -1,5 +1,4 @@
-#include "data_ivan.h"
-//#include "data_basicmodel.h"		//- basic example, FD method [needs data_default.h]
+#include "data_basicmodel.h"		//- basic example, FD method [needs data_default.h]
 //#include "data_advancedmodel.h"       //- basic example, FD method using Hnum numerical hamiltonian <LINKED TO> data_basicmodel.h
 //#include "data_FD_vdp.h"		//- Van Der Pol example, FD method [needs data_default.h]
 //#include "data_FD_zermelo.h"	        //- zermelo example, trajectory reconstruction based on minimal time
