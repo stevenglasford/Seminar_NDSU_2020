@@ -83,6 +83,7 @@ const int     SAVE_VF_FINAL     = 1;
 
 const int     CHECK_ERROR       = 0;       //- 1 to compute errors every CHECK_ERROR_STEP iterations
 const int     CHECK_ERROR_STEP  = 100;
+const int     CHECK_NEG_POINTS  = 0;       //- 2/1/0 : to print number of negative point in domain and domain + boundary (default : 0)
 
 
 //-------------------
@@ -123,6 +124,17 @@ const double  n_1 = 9.0,
 //- if COMMANDS=2 (2 player games): dynamics and distributed cost
 //---------------------------------------------------------------
 
+
+//- feedback function for particular schemes 
+inline void feedback(double t, const double* x, const double* p, C& u){  //- only needed for NBEE-OC
+  //- input  : t,x,p
+  //- output : u, that maximizes  max_u (- p. dynamics(t,x,u) - dist_cost(t,x,u)) 
+  //- Example rotation (no control)
+  double f0=-(-2*pi*x[1]);
+  double f1=-(+2*pi*x[0]);
+  //u[0]=max(0.0, -(p[0]*f0+p[1]*f1));
+  u[0]=(-(p[0]*f0+p[1]*f1)>=0);
+}
 
 inline void dynamics2(const double* x, C u, C u2, double t, double* res) {
 
@@ -205,8 +217,8 @@ inline double Hnum(const double t, const double* x, const double vi, const doubl
 //--------------------------------
 //- PARAMETERS FOR ADVANCED USERS
 //--------------------------------
-const int     EXTERNALV0        = 0;           //- if 1 then starts computation from data in VF.dat and not from the v0 function
-const int     PRECOMPUTE_COORDS = 1;           //- to precompute mesh coordinates (faster but needs more memory).
+// const int     EXTERNALV0        = 0;           //- if 1 then starts computation from data in VF.dat and not from the v0 function
+// const int     PRECOMPUTE_COORDS = 1;           //- to precompute mesh coordinates (faster but needs more memory).
 
 //--------------------
 //- OBSTACLE g
@@ -224,3 +236,15 @@ int BORDERSIZE[DIM] = {2,2};
 //- Special parameter for method SL
 //--------------------
 const int     P_INTERMEDIATE    = 1;    //- number of discretisation steps for approximating each trajectory in method MSL
+
+// -------------------
+// - For parameter intialization/termination
+// -------------------
+void post_data(){}
+void init_data(){
+  SAVE_COUPE_ALL_STEP= 10; //- can be different from SAVE_VF_ALL_STEP; used for all "coupe" files
+  SAVE_COUPE_ALL     = 0;
+  SAVE_COUPE_FINAL   = 1;
+  SAVE_COUPEEX_ALL   = 0;
+  SAVE_COUPEEX_FINAL = 1;
+}

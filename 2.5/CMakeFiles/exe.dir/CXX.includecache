@@ -6,19 +6,25 @@
 
 #IncludeRegexTransform: 
 
-/home/steven/Documents/Seminar_NDSU_2020/2.5/src/HJB_user.cpp
-HJB.h
-/home/steven/Documents/Seminar_NDSU_2020/2.5/src/HJB.h
-compute_ot.h
-/home/steven/Documents/Seminar_NDSU_2020/2.5/src/compute_ot.h
-compute_ot2.h
-/home/steven/Documents/Seminar_NDSU_2020/2.5/src/compute_ot2.h
-compute_otval.h
-/home/steven/Documents/Seminar_NDSU_2020/2.5/src/compute_otval.h
-find_oc.h
-/home/steven/Documents/Seminar_NDSU_2020/2.5/src/find_oc.h
-find_oc2.h
-/home/steven/Documents/Seminar_NDSU_2020/2.5/src/find_oc2.h
+/home/steven/Documents/Seminar_NDSU_2020/2.5/data/data_default.h
+
+/home/steven/Documents/Seminar_NDSU_2020/2.5/data/data_ivan.h
+data_default.h
+/home/steven/Documents/Seminar_NDSU_2020/2.5/data/data_default.h
+
+/home/steven/Documents/Seminar_NDSU_2020/2.5/data/data_simulation.h
+data_ivan.h
+/home/steven/Documents/Seminar_NDSU_2020/2.5/data/data_ivan.h
+
+/home/steven/Documents/Seminar_NDSU_2020/2.5/src/main.cpp
+stdafx.h
+/home/steven/Documents/Seminar_NDSU_2020/2.5/src/stdafx.h
+HJB_FD.h
+/home/steven/Documents/Seminar_NDSU_2020/2.5/src/HJB_FD.h
+HJB_SL.h
+/home/steven/Documents/Seminar_NDSU_2020/2.5/src/HJB_SL.h
+../data/data_simulation.h
+/home/steven/Documents/Seminar_NDSU_2020/2.5/data/data_simulation.h
 
 include/Commands.h
 stdafx.h
@@ -32,19 +38,21 @@ include/RegularMesh.h
 Commands.h
 include/Commands.h
 
+include/HJB_FD.h
+stdafx.h
+include/stdafx.h
+HJB.h
+include/HJB.h
+
+include/HJB_SL.h
+stdafx.h
+include/stdafx.h
+HJB.h
+include/HJB.h
+
 include/RegularMesh.h
 stdafx.h
 include/stdafx.h
-
-include/compute_ot.h
-
-include/compute_ot2.h
-
-include/compute_otval.h
-
-include/find_oc.h
-
-include/find_oc2.h
 
 include/stdafx.h
 unistd.h
