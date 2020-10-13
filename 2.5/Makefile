@@ -142,6 +142,33 @@ exe/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/exe.dir/build.make CMakeFiles/exe.dir/build
 .PHONY : exe/fast
 
+src/HJB_user.o: src/HJB_user.cpp.o
+
+.PHONY : src/HJB_user.o
+
+# target to build an object file
+src/HJB_user.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/exe.dir/build.make CMakeFiles/exe.dir/src/HJB_user.cpp.o
+.PHONY : src/HJB_user.cpp.o
+
+src/HJB_user.i: src/HJB_user.cpp.i
+
+.PHONY : src/HJB_user.i
+
+# target to preprocess a source file
+src/HJB_user.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/exe.dir/build.make CMakeFiles/exe.dir/src/HJB_user.cpp.i
+.PHONY : src/HJB_user.cpp.i
+
+src/HJB_user.s: src/HJB_user.cpp.s
+
+.PHONY : src/HJB_user.s
+
+# target to generate assembly for a file
+src/HJB_user.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/exe.dir/build.make CMakeFiles/exe.dir/src/HJB_user.cpp.s
+.PHONY : src/HJB_user.cpp.s
+
 src/main.o: src/main.cpp.o
 
 .PHONY : src/main.o
@@ -178,6 +205,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... exe"
+	@echo "... src/HJB_user.o"
+	@echo "... src/HJB_user.i"
+	@echo "... src/HJB_user.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
