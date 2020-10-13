@@ -1,0 +1,14 @@
+include/secondorder_itSL_evo_omp.h
+include/secondorder_itSL_evo.h
+include/saveCoupeMex.h
+include/saveCoupeM.h
+include/find_oc_texit.h
+include/find_oc_adapt.h
+include/find_oc2.h
+include/find_oc.h
+include/compute_otval.h
+include/compute_ot_texit.h
+include/compute_ot_adapt.h
+include/compute_ot2.h
+include/compute_ot.h
+src/HJB_user.cpp
