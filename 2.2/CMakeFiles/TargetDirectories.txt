@@ -1,3 +1,0 @@
-/home/steven/Documents/rochj-2.2-21apr2017-linux64/CMakeFiles/rebuild_cache.dir
-/home/steven/Documents/rochj-2.2-21apr2017-linux64/CMakeFiles/edit_cache.dir
-/home/steven/Documents/rochj-2.2-21apr2017-linux64/CMakeFiles/exe.dir

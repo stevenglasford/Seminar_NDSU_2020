@@ -1,1 +1,0 @@
-/usr/bin/c++  -O3 -fopenmp -rdynamic CMakeFiles/exe.dir/src/HJB_user.cpp.o CMakeFiles/exe.dir/src/main.cpp.o -o exe   -L/home/steven/Documents/rochj-2.2-21apr2017-linux64/lib  -Wl,-rpath,/home/steven/Documents/rochj-2.2-21apr2017-linux64/lib -lhj 

@@ -1,0 +1,1 @@
+/usr/bin/g++  -O3 -fopenmp -rdynamic CMakeFiles/exe.dir/src/main.cpp.o -o exe   -L/home/steven/Documents/Seminar_NDSU_2020/ivan_to_2.5/lib  -Wl,-rpath,/home/steven/Documents/Seminar_NDSU_2020/ivan_to_2.5/lib -lhj 
